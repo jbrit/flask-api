@@ -5,8 +5,8 @@ db = SQLAlchemy()
 class Person(db.Model):
     __tablename__ = 'people'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    email = db.Column(db.String(120), index=True, unique=True)
+    username = db.Column(db.String(64))
+    email = db.Column(db.String(120))
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -19,7 +19,9 @@ class Talk(db.Model):
     description = db.Column(db.String(120), nullable=False)
     speaker_ids = db.Column(db.Integer, db.ForeignKey('people.id'))
     participant_ids = db.Column(db.Integer, db.ForeignKey('people.id'))
-    conference_id = db.Column(db.Integer, db.ForeignKey('conferences.id'))
+    participants = db.relationship('Person', foreign_keys=[participant_ids])
+    speakers = db.relationship('Person', foreign_keys=[speaker_ids])
+    conference_id = db.Column(db.Integer, db.ForeignKey('conferences.id'), nullable=False)
 
     def __repr__(self):
         return '<Talk {}>'.format(self.title)
