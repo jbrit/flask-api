@@ -15,8 +15,8 @@ class Person(db.Model):
 class Talk(db.Model):
     __tablename__ = 'talks'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), null=False)
-    description = db.Column(db.String(120), null=False)
+    title = db.Column(db.String(), nullable=False)
+    description = db.Column(db.String(120), nullable=False)
     speaker_ids = db.Column(db.Integer, db.ForeignKey('people.id'))
     participant_ids = db.Column(db.Integer, db.ForeignKey('people.id'))
     conference_id = db.Column(db.Integer, db.ForeignKey('conferences.id'))
@@ -27,10 +27,10 @@ class Talk(db.Model):
 class Conference(db.Model):
     __tablename__ = 'conferences'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), null=False)
-    description = db.Column(db.String(120), null=False)
-    start_date = db.Column(db.DateTime, null=False)
-    end_date = db.Column(db.DateTime, null=False)
+    title = db.Column(db.String(64), nullable=False)
+    description = db.Column(db.String(120), nullable=False)
+    start_date = db.Column(db.DateTime, nullable=False)
+    end_date = db.Column(db.DateTime, nullable=False)
     talks = db.relationship('Talk', backref='conference', lazy='dynamic')
 
     def __repr__(self):

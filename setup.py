@@ -1,9 +1,11 @@
 from flask import Flask
 from flask_restful import abort
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 from webargs.flaskparser import parser
 from config import app_config
 from views import api_blueprint, docs
-
+from models import db
 
 # This error handler is necessary for usage with Flask-RESTful
 # pylint: disable=unused-argument
@@ -15,9 +17,13 @@ def handle_request_parsing_error(err, req, schema, **kwargs):
     abort(422, errors=err.messages)
 
 
+migrate = Migrate()
+
 def create_app():
     app = Flask(__name__)
     app.config.update(app_config)
     app.register_blueprint(api_blueprint)
+    db.init_app(app)
+    migrate.init_app(app, db)
     docs.init_app(app)
     return app
