@@ -1,7 +1,7 @@
 from flask_apispec import marshal_with, use_kwargs
 from utils import Resource
 
-class Task(Resource):
+class Talk(Resource):
     @marshal_with(None, apply=False)
     def get(self):
         "", 200
