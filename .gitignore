@@ -9,3 +9,4 @@ __pycache__/
 .tox/
 .pytest_cache/
 app.db
+.env/
